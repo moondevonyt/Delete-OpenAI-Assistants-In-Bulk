@@ -1,7 +1,8 @@
 from openai import OpenAI 
 import time 
+import schedule
 
-client = OpenAI(api_key='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')
+client = OpenAI(api_key='YOUR KEY HERE BRO')
 
 # list all of our assistants 
 def list_assistants(client, limit=100):
@@ -24,14 +25,24 @@ do_not_delete_ids = {
     'sjklsjfdskj'
 }
 
-# get the list of assistants 
-my_assistants = list_assistants(client)
+def bot():
+    # get the list of assistants 
+    my_assistants = list_assistants(client)
 
-# delete all of the assistants that are not in the do_not_delete_ids set
-for assistant in my_assistants.data:
-    if assistant.id not in do_not_delete_ids:
-        delete_assistant(client, assistant.id)
-        time.sleep(.2)
-    else:
-        print(f'Not deleting: {assistant.id}')
+    # delete all of the assistants that are not in the do_not_delete_ids set
+    for assistant in my_assistants.data:
+        if assistant.id not in do_not_delete_ids:
+            delete_assistant(client, assistant.id)
+            time.sleep(.2)
+        else:
+            print(f'Not deleting: {assistant.id}')
 
+
+schedule.every(2).seconds.do(bot)   
+
+while True:
+    try:
+        schedule.run_pending()
+    except:
+        print('+++++ maybe an internet problem.. code failed. sleeping 10')
+        time.sleep(10)
