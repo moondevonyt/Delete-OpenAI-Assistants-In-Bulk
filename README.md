@@ -2,4 +2,4 @@
 
 run delete.py after putting in your Open AI api key
 
-youtube walkthrough: 
+youtube walkthrough: https://youtu.be/fdid-dBG8K0
